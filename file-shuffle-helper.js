@@ -18,16 +18,6 @@ function getNumbersArr(length) {
    var arr = Array(length),
       prefix = (length + ''),
       numOfDigits = prefix.length;
-   function shuffle(a) {
-      var j, x, i;
-      for (i = a.length - 1; i > 0; i--) {
-         j = Math.floor(Math.random() * (i + 1));
-         x = a[i];
-         a[i] = a[j];
-         a[j] = x;
-      }
-      return a;
-   }
 
    prefix = prefix.replace(/\d/g, '0');
 
@@ -35,7 +25,9 @@ function getNumbersArr(length) {
       arr[i] = (prefix + (i + 1)).match(RegExp('\\d{' + numOfDigits + '}$')) + '';
    }
 
-   return shuffle(arr);
+   return arr.sort(function(a,b){
+      return Math.random() - 0.5;
+   });
 }
 
 function getNewFileName(index, name) {
