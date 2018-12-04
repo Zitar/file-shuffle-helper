@@ -93,11 +93,18 @@ var filesBuffer = fs.readdirSync(pathToFolder),
    fileMaskRegExp = getFileMaskRegExp(fileExt),
    numbers = filesCount ? getNumbersArr(filesCount) : 0,
    shuffledNumbers = shuffle(numbers.slice()),
+   fileNamePrefixRegExp = RegExp('^\\d* - '),
    curFileName;
 
 while (!validateShuffleResult(shuffledNumbers)) {
    shuffle(shuffledNumbers);
 }
+
+filesCount && filesBuffer.sort(function(a, b) {
+   var clearA = a.replace(fileNamePrefixRegExp, ''),
+      clearB = b.replace(fileNamePrefixRegExp, '');
+   return clearA < clearB ? -1 : +(clearA > clearB);
+});
 
 for (var i = 0; i < filesCount; i++) {
    curFileName = filesBuffer[i] || '';
